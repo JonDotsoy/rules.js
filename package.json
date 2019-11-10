@@ -1,20 +1,27 @@
 {
-  "name": "rules",
+  "name": "rules.js",
   "version": "1.0.0",
-  "description": "",
+  "description": "Grant access through a central control.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "engines": {
+    "node": "12.13.0",
+    "npm": "6.12.0"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "scripts": {
+    "build": "tsc",
+    "test": "node -r ts-node/register test.ts"
+  },
+  "keywords": [
+    "Grant access",
+    "Rules control"
+  ],
+  "author": "Jonathan Delgado <hi@jon.soy> (https://jon.soy)",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^12.12.7",
     "nodemon": "^1.19.4",
+    "ts-node": "^8.4.1",
     "typescript": "^3.7.2"
   },
-  "dependencies": {
-    "ts-node": "^8.4.1"
-  }
+  "dependencies": {}
 }
