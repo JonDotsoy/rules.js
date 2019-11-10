@@ -1,5 +1,5 @@
 {
-  "name": "rules.js",
+  "name": "bylaw",
   "version": "1.0.0",
   "description": "Grant access through a central control.",
   "main": "index.js",
