@@ -1,6 +1,6 @@
 {
   "name": "bylaw",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Grant access through a central control.",
   "main": "index.js",
   "engines": {
