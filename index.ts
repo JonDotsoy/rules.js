@@ -1,6 +1,6 @@
 
 type InjectArgs = { crudAction: string, [key: string]: any };
-type Evaluator<T extends object = any> = (arg?: T) => boolean;
+type Evaluator<T extends object = any> = (arg?: T) => boolean | undefined;
 
 type EvaluatorDefinitionFunction<T extends object = any> = (arg: T) => boolean;
 type EvaluatorDefinition<T extends object = any> = EvaluatorDefinitionFunction<T> | boolean;
@@ -37,7 +37,8 @@ export function test<O extends object = any, T extends object = any>(crudAction:
   if (typeof evaluator === 'boolean') return evaluator;
 
   try {
-    return evaluator({ crudAction, ...arg });
+    const result = evaluator({ crudAction, ...arg });
+    return result ? result : false;
   } catch {
     return false;
   }
