@@ -1,8 +1,8 @@
 
 type InjectArgs = { crudAction: string, [key: string]: any };
-type Evaluator<T extends object = any> = (arg?: T) => boolean | undefined;
+type Evaluator<T extends object = any> = (arg?: T) => boolean;
 
-type EvaluatorDefinitionFunction<T extends object = any> = (arg: T) => boolean;
+type EvaluatorDefinitionFunction<T extends object = any> = (arg: T) => boolean | undefined;
 type EvaluatorDefinition<T extends object = any> = EvaluatorDefinitionFunction<T> | boolean;
 type ContextEvaluationCrud<T extends object = any> = {
   create?: EvaluatorDefinition<T>;
