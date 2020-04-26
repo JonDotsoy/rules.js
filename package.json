@@ -20,9 +20,17 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^12.12.7",
-    "nodemon": "^1.19.4",
+    "nodemon": "^2.0.3",
     "ts-node": "^8.4.1",
     "typescript": "^3.7.2"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JonDotsoy/bylaw.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JonDotsoy/bylaw/issues"
+  },
+  "homepage": "https://github.com/JonDotsoy/bylaw#readme"
 }
