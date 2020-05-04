@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc",
     "test": "node -r ts-node/register test.ts",
-    "release": "tsc"
+    "prepare": "tsc"
   },
   "keywords": [
     "Grant access",
