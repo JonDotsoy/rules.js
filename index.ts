@@ -52,7 +52,7 @@ const noopRule: RuleEvaluator = {
   testDelete: () => false,
 };
 
-export function createRules<O extends object = any, K extends string = string>(definitionRules: { [rule in K]: ContextEvaluation<O & InjectArgs> }) {
+export function createRules<O extends object = any, K extends string | number = string>(definitionRules: { [rule in K]: ContextEvaluation<O & InjectArgs> }) {
   type keyRules = keyof typeof definitionRules;
   const contexts = {} as { [rule in keyRules]: RuleEvaluator };
 
