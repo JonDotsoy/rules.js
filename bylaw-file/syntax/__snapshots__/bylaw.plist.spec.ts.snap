@@ -1,0 +1,209 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stringify to ts 1`] = `
+"createGrammar(() => Pattern.create('repository', {
+  fileTypes: [ 'bylaw' ],
+  name: 'bylaw',
+  patterns: [ Pattern.create('include', { include: '#main' }) ],
+  scopeName: 'source.bylaw',
+  uuid: '',
+  repository: Repository.create({
+    main: {
+      patterns: [
+        Pattern.create('include', { include: '#match' }),
+        Pattern.create('include', { include: '#variable' })
+      ]
+    },
+    allow_exception: {
+      patterns: [
+        Pattern.create('inline-pattern', {
+          begin: /(\\\\ballow\\\\b)/,
+          beginCaptures: { '1': { name: 'storage.type.bylaw' } },
+          patterns: [ Pattern.create('include', { include: '#allow_exception__1' }) ],
+          end: /(\\\\:)/,
+          endCaptures: { '1': { name: 'storage.type.bylaw' } }
+        }),
+        Pattern.create('include', { include: '#inline_condition' }),
+        Pattern.create('match', { match: /(.)/, name: 'invalid.illegal.bylaw' })
+      ]
+    },
+    allow_exception__1: {
+      patterns: [
+        Pattern.create('match', { match: /(\\\\b[a-z_A-Z0-9]+)/, name: 'string.bylaw' }),
+        Pattern.create('match', { match: /(,)/, name: 'storage.type.bylaw' }),
+        Pattern.create('match', { match: /(.)/, name: 'invalid.illegal.bylaw' })
+      ]
+    },
+    boolean: {
+      patterns: [
+        Pattern.create('inline-pattern', {
+          begin: /(true|false)/,
+          beginCaptures: { '1': { name: 'constant.other.bylaw' } },
+          patterns: [ Pattern.create('include', { include: '#boolean__1' }) ],
+          end: /(\\\\b)/,
+          endCaptures: { '1': { name: 'storage.type.bylaw' } }
+        })
+      ]
+    },
+    boolean__1: {
+      patterns: [
+        Pattern.create('match', { match: /(.*)/, name: 'invalid.illegal.bylaw' })
+      ]
+    },
+    inline_condition: {
+      patterns: [
+        Pattern.create('inline-pattern', {
+          begin: /(\\\\bif)/,
+          beginCaptures: { '1': { name: 'storage.type.bylaw' } },
+          patterns: [ Pattern.create('include', { include: '#inline_condition__1' }) ],
+          end: /(\\\\;)/,
+          endCaptures: { '1': { name: 'storage.type.bylaw' } }
+        })
+      ]
+    },
+    inline_condition__1: {
+      patterns: [
+        Pattern.create('match', { match: /(\\\\b(or|and)\\\\b)/, name: 'storage.type.bylaw' }),
+        Pattern.create('match', { match: /(==)/, name: 'storage.type.bylaw' }),
+        Pattern.create('include', { include: '#string' }),
+        Pattern.create('include', { include: '#boolean' }),
+        Pattern.create('include', { include: '#number' }),
+        Pattern.create('include', { include: '#selector' }),
+        Pattern.create('match', { match: /(.)/, name: 'invalid.illegal.bylaw' })
+      ]
+    },
+    match: {
+      patterns: [
+        Pattern.create('inline-pattern', {
+          begin: /(\\\\s*\\\\bmatch)/,
+          beginCaptures: { '1': { name: 'storage.type.bylaw' } },
+          patterns: [ Pattern.create('include', { include: '#match__1' }) ],
+          end: /(^(?=.{0,1})(?:|))/,
+          endCaptures: { '1': { name: 'variable.bylaw' } }
+        })
+      ]
+    },
+    match__1: {
+      patterns: [
+        Pattern.create('include', { include: '#router_pattern' }),
+        Pattern.create('inline-pattern', {
+          begin: /(\\\\s*\\\\{)/,
+          beginCaptures: { '1': { name: 'storage.type.bylaw' } },
+          patterns: [ Pattern.create('include', { include: '#match__2' }) ],
+          end: /(\\\\s*\\\\})/,
+          endCaptures: { '1': { name: 'storage.type.bylaw' } }
+        })
+      ]
+    },
+    match__2: {
+      patterns: [
+        Pattern.create('include', { include: '#allow_exception' }),
+        Pattern.create('match', { match: /([^\\\\s])/, name: 'invalid.illegal.bylaw' })
+      ]
+    },
+    number: {
+      patterns: [
+        Pattern.create('match', {
+          match: /(\\\\s*(\\\\b|-)\\\\d+(_\\\\d+)*(\\\\.\\\\d+(_\\\\d+)*)?)/,
+          name: 'constant.numeric.bylaw'
+        })
+      ]
+    },
+    router_pattern: {
+      patterns: [
+        Pattern.create('inline-pattern', {
+          begin: /([^\\\\/a-zA-Z0-9_-\\\\{\\\\}])/,
+          beginCaptures: { '1': { name: 'string.bylaw' } },
+          patterns: [ Pattern.create('include', { include: '#router_pattern__1' }) ],
+          end: /([^\\\\/a-zA-Z0-9_-\\\\{\\\\}])/,
+          endCaptures: { '1': { name: 'string.bylaw' } }
+        })
+      ]
+    },
+    router_pattern__1: {
+      patterns: [
+        Pattern.create('match', { match: /([\\\\/a-zA-Z0-9_-])/, name: 'string.bylaw' }),
+        Pattern.create('inline-pattern', {
+          begin: /(\\\\{)/,
+          beginCaptures: { '1': { name: 'storage.type.bylaw' } },
+          patterns: [ Pattern.create('include', { include: '#router_pattern__2' }) ],
+          end: /(\\\\})/,
+          endCaptures: { '1': { name: 'storage.type.bylaw' } }
+        })
+      ]
+    },
+    router_pattern__2: {
+      patterns: [
+        Pattern.create('match', { match: /(\\\\b[a-z_A-Z0-9]+)/, name: 'variable.bylaw' }),
+        Pattern.create('match', { match: /([^\\\\s]*)/, name: 'invalid.illegal.bylaw' })
+      ]
+    },
+    selector: {
+      patterns: [
+        Pattern.create('match', {
+          match: /(\\\\b[\\\\w\\\\x{0024}_]+(\\\\s*(\\\\.\\\\s*[\\\\w\\\\x{0024}_]+|\\\\[\\\\s*(\\".*?\\"|'.*?'|-?\\\\d+(_\\\\d+)*)\\\\s*\\\\]))*)/,
+          name: 'variable.bylaw'
+        })
+      ]
+    },
+    string: {
+      patterns: [
+        Pattern.create('include', { include: '#string_doble_quote' }),
+        Pattern.create('include', { include: '#string_simple_quote' })
+      ]
+    },
+    string_doble_quote: {
+      patterns: [
+        Pattern.create('inline-pattern', {
+          begin: /(\\\\\\")/,
+          beginCaptures: { '1': { name: 'string.bylaw' } },
+          patterns: [ Pattern.create('include', { include: '#string_doble_quote__1' }) ],
+          end: /([^\\\\x{005c}\\\\x{0022}]\\\\\\")/,
+          endCaptures: { '1': { name: 'string.bylaw' } }
+        })
+      ]
+    },
+    string_doble_quote__1: {
+      patterns: [
+        Pattern.create('match', { match: /(\\\\\\\\\\\\\\"|[^\\\\\\"])/, name: 'string.bylaw' })
+      ]
+    },
+    string_simple_quote: {
+      patterns: [
+        Pattern.create('inline-pattern', {
+          begin: /(\\\\s*\\\\')/,
+          beginCaptures: { '1': { name: 'string.bylaw' } },
+          patterns: [ Pattern.create('include', { include: '#string_simple_quote__1' }) ],
+          end: /([^\\\\x{005c}\\\\x{0027}]\\\\')/,
+          endCaptures: { '1': { name: 'string.bylaw' } }
+        })
+      ]
+    },
+    string_simple_quote__1: {
+      patterns: [
+        Pattern.create('match', { match: /(\\\\\\\\\\\\'|[^\\\\'])/, name: 'string.bylaw' })
+      ]
+    },
+    variable: {
+      patterns: [
+        Pattern.create('inline-pattern', {
+          begin: /(\\\\s*\\\\b[a-z_A-Z0-9]+)/,
+          beginCaptures: { '1': { name: 'variable.bylaw' } },
+          patterns: [ Pattern.create('include', { include: '#variable__1' }) ],
+          end: /(\\\\s*\\\\;)/,
+          endCaptures: { '1': { name: 'storage.type.bylaw' } }
+        })
+      ]
+    },
+    variable__1: {
+      patterns: [
+        Pattern.create('match', { match: /(\\\\s*\\\\=)/, name: 'storage.type.bylaw' }),
+        Pattern.create('include', { include: '#string' }),
+        Pattern.create('include', { include: '#number' }),
+        Pattern.create('include', { include: '#boolean' }),
+        Pattern.create('match', { match: /([^\\\\s])/, name: 'invalid.illegal.bylaw' })
+      ]
+    }
+  })
+}))"
+`;

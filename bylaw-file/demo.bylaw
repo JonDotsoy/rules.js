@@ -1,0 +1,3 @@
+match /gola/thick {
+    allow read: if true;
+}

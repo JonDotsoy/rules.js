@@ -1,0 +1,317 @@
+#################################################################
+## Iro
+################################################################ 
+##
+## * Press Ctrl + '+'/'-' To Zoom in
+## * Press Ctrl + S to save and recalculate... 
+## * Documents are saved to web storage.
+## * Only one save slot supported.
+## * Matches cannot span lines.
+## * Unicode chars must be defined in \u0000 to \uffff format.
+## * All matches must be contained by a single group ( ... )
+## * Look behinds not permitted, (?<= or (?<!
+## * Look forwards are permitted (?= or (?!
+## * Constants are defined as __my_const = (......)
+## * The \= format allows unescaped regular expressions
+## * Constants referenced by match \= $${__my_const}
+## * Constants can reference other constants
+## * You are free to delete all the default scopes.
+## * Twitter : ainslec , Web: http://eeyo.io/iro
+##
+################################################################
+
+name                   = bylaw
+file_extensions []     = bylaw;
+
+################################################################
+## Constants
+################################################################
+
+################################################################
+## Styles
+################################################################
+
+styles [] {
+   .variable_name : style {
+      color                           = yellow
+      textmate_scope                  = variable
+   }
+
+   .symbol : style {
+      color = grey
+      textmate_scope                  = storage.type
+   }
+
+   .string : style {
+      color = green
+      textmate_scope                  = string
+   }
+   
+   .number : style {
+      color = blue
+      textmate_scope                  = constant.numeric
+   }
+   
+   .illegal : style {
+      color  = red
+      textmate_scope                  = invalid.illegal
+   }
+   
+   .boolean : style {
+      color = green
+      textmate_scope                  = constant.other
+   }
+}
+
+#################################################
+## Parse contexts
+#################################################
+
+contexts [] {
+
+##############################################
+## Main Context - Entry point context
+##############################################
+
+main : context {
+   : include "match" ;
+   : include "variable" ;
+}
+
+match : context {
+   : inline_push {
+      regex            \= (\s*\bmatch)
+      styles []         = .symbol;
+      
+      : eol_pop {}
+      
+      : include "router_pattern" ;
+      
+      : inline_push {
+         regex            \= (\s*\{)
+         styles []         = .symbol;
+
+         : pop {
+            regex      \= (\s*\})
+            styles []   = .symbol;
+         }
+         
+         : include "allow_exception" ;
+         
+         : pattern {
+            regex      \= ([^\s])
+            styles []   = .illegal;
+         }
+      }
+   }
+}
+
+equal_symbol : context {
+   : pattern {
+     regex            \= (=)
+      styles []   = .symbol;
+   }
+}
+
+variable : context {
+   : inline_push {
+      regex \= (\s*\b[a-z_A-Z0-9]+)
+      styles [] = .variable_name;
+      
+      : pop {
+         regex \= (\s*\;)
+         styles[] = .symbol;
+      }
+      
+      : pattern {
+         regex            \= (\s*\=)
+         styles []         = .symbol;
+      }
+   
+      : include "string";
+      : include "number";
+      : include "boolean" ;
+   
+      : pattern {
+         regex \= ([^\s])
+         styles [] = .illegal;
+      }
+   }
+}
+
+string : context {
+   : include "string_doble_quote" ;
+   : include "string_simple_quote" ;
+}
+
+string_doble_quote : context {
+   : inline_push {
+      regex            \= (\")
+      styles []         = .string;
+
+      : pop {
+         regex      \= ([^\\"]\")
+         styles []   = .string;
+      }
+
+      : pattern {
+         regex      \= (\\\"|[^\"])
+         styles []   = .string;
+      }
+   }
+}
+
+string_simple_quote : context {
+   : inline_push {
+      regex            \= (\s*\')
+      styles []         = .string;
+
+      : pop {
+         regex      \= ([^\\']\')
+         styles []   = .string;
+      }
+
+      : pattern {
+         regex      \= (\\\'|[^\'])
+         styles []   = .string;
+      }
+   }
+}
+
+number : context {
+   : pattern {
+      regex      \= (\s*(\b|-)\d+(_\d+)*(\.\d+(_\d+)*)?)
+      styles []   = .number;
+   }
+}
+
+boolean : context {
+   : inline_push {
+      regex            \= (true|false)
+      styles []         = .boolean;
+
+      : pop {
+         regex      \= (\b)
+         styles []   = .symbol;
+      }
+      
+      : pattern {
+         regex      \= (.*)
+         styles []   = .illegal;
+      }
+   }
+}
+
+selector : context {
+   : pattern {
+      regex \= (\b[\w$_]+(\s*(\.\s*[\w$_]+|\[\s*(".*?"|'.*?'|-?\d+(_\d+)*)\s*\]))*)
+      styles [] = .variable_name;
+   }
+}
+
+router_pattern : context {
+   : inline_push {
+      regex \= ([^\/a-zA-Z0-9_-\{\}])
+      styles [] = .string;
+      
+      : pop {
+         regex \= ([^\/a-zA-Z0-9_-\{\}])
+         styles [] = .string;
+      }
+      
+      : pattern {
+         regex      \= ([\/a-zA-Z0-9_-])
+         styles []   = .string;
+      }
+      
+      
+      : inline_push {
+         regex            \= (\{)
+         styles []         = .symbol;
+         
+         : pop {
+            regex      \= (\})
+            styles []   = .symbol;
+         }
+         
+         : pattern {
+            regex      \= (\b[a-z_A-Z0-9]+)
+            styles []   = .variable_name;
+         }
+         
+         : pattern {
+            regex      \= ([^\s]*)
+            styles []   = .illegal;
+         }
+      }
+   }
+}
+
+allow_exception : context {
+   : inline_push {
+      regex            \= (\ballow\b)
+      styles []         = .symbol;
+      
+      : pop {
+         regex \= (\:)
+         styles []   = .symbol;
+      }
+      
+      : pattern {
+         regex      \= (\b[a-z_A-Z0-9]+)
+         styles []   = .string;
+      }
+      
+      : pattern {
+         regex      \= (,)
+         styles []   = .symbol;
+      }
+
+      : pattern {
+         regex      \= (.)
+         styles []   = .illegal;
+      }
+   }
+   
+   : include "inline_condition" ;
+   
+   : pattern {
+      regex      \= (.)
+      styles []   = .illegal;
+   }
+}
+
+inline_condition : context {
+   : inline_push {
+      regex            \= (\bif)
+      styles []         = .symbol;
+      
+      : pop {
+         regex      \= (\;)
+         styles []   = .symbol;
+      }
+
+      : pattern {
+         regex      \= (\b(or|and)\b)
+         styles []   = .symbol;
+      }
+
+      : pattern {
+         regex      \= (==)
+         styles []   = .symbol;
+      }
+      
+      : include "string" ;
+      : include "boolean" ;
+      : include "number" ;
+      : include "selector" ;
+
+      : pattern {
+         regex      \= (.)
+         styles []   = .illegal;
+      }
+   }
+}
+
+}
+

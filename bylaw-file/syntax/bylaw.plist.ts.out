@@ -1,0 +1,174 @@
+export const plistValues = {
+  fileTypes: [ 'bylaw' ],
+  name: 'bylaw',
+  patterns: [ { include: '#main' } ],
+  scopeName: 'source.bylaw',
+  uuid: '',
+  repository: {
+    main: { patterns: [ { include: '#match' }, { include: '#variable' } ] },
+    allow_exception: {
+      patterns: [
+        {
+          begin: '(\ballow\b)',
+          beginCaptures: { '1': { name: 'storage.type.bylaw' } },
+          patterns: [ { include: '#uid_allow_exception' } ],
+          end: '(:)',
+          endCaptures: { '1': { name: 'storage.type.bylaw' } }
+        },
+        { include: '#inline_condition' },
+        { match: '(.)', name: 'invalid.illegal.bylaw' }
+      ]
+    },
+    boolean: {
+      patterns: [
+        {
+          begin: '(true|false)',
+          beginCaptures: { '1': { name: 'constant.other.bylaw' } },
+          patterns: [ { include: '#uid_boolean' } ],
+          end: '(\b)',
+          endCaptures: { '1': { name: 'storage.type.bylaw' } }
+        }
+      ]
+    },
+    inline_condition: {
+      patterns: [
+        {
+          begin: '(\bif)',
+          beginCaptures: { '1': { name: 'storage.type.bylaw' } },
+          patterns: [ { include: '#uid_condition' } ],
+          end: '(;)',
+          endCaptures: { '1': { name: 'storage.type.bylaw' } }
+        }
+      ]
+    },
+    match: {
+      patterns: [
+        {
+          begin: '(\bmatch)',
+          beginCaptures: { '1': { name: 'storage.type.bylaw' } },
+          patterns: [ { include: '#uid_match_start' } ],
+          end: '(^(?=.{0,1})(?:|))',
+          endCaptures: { '1': { name: 'variable.bylaw' } }
+        }
+      ]
+    },
+    number: {
+      patterns: [
+        {
+          begin: '((\b|-)d+(_d+)*)',
+          beginCaptures: { '1': { name: 'constant.numeric.bylaw' } },
+          patterns: [ { include: '#uid_number' } ],
+          end: '(\b)',
+          endCaptures: { '1': { name: 'storage.type.bylaw' } }
+        }
+      ]
+    },
+    router_pattern: {
+      patterns: [
+        {
+          begin: '([^/a-zA-Z0-9_-{}])',
+          beginCaptures: { '1': { name: 'string.bylaw' } },
+          patterns: [ { include: '#uid_router_pattern' } ],
+          end: '([^/a-zA-Z0-9_-{}])',
+          endCaptures: { '1': { name: 'string.bylaw' } }
+        }
+      ]
+    },
+    selector: {
+      patterns: [
+        {
+          match: `(\\b[\\w\\x{0024}_]+(\\s*(\\.\\s*[\\w\\x{0024}_]+|\\[\\s*(".*?"|'.*?'|-?\\d+(_\\d+)*)\\s*\\]))*)`,
+          name: 'variable.bylaw'
+        }
+      ]
+    },
+    string: {
+      patterns: [
+        {
+          begin: '(")',
+          beginCaptures: { '1': { name: 'string.bylaw' } },
+          patterns: [ { include: '#uid_string' } ],
+          end: '(")',
+          endCaptures: { '1': { name: 'string.bylaw' } }
+        }
+      ]
+    },
+    uid_allow_exception: {
+      patterns: [
+        { match: '(\b[a-z_A-Z0-9]+)', name: 'string.bylaw' },
+        { match: '(,)', name: 'storage.type.bylaw' },
+        { match: '(.)', name: 'invalid.illegal.bylaw' }
+      ]
+    },
+    uid_boolean: { patterns: [ { match: '(.*)', name: 'invalid.illegal.bylaw' } ] },
+    uid_condition: {
+      patterns: [
+        { match: '(\b(or|and)\b)', name: 'storage.type.bylaw' },
+        { match: '(==)', name: 'storage.type.bylaw' },
+        { include: '#string' },
+        { include: '#boolean' },
+        { include: '#number' },
+        { include: '#selector' },
+        { match: '(.)', name: 'invalid.illegal.bylaw' }
+      ]
+    },
+    uid_match_start: {
+      patterns: [
+        { include: '#router_pattern' },
+        {
+          begin: '({)',
+          beginCaptures: { '1': { name: 'storage.type.bylaw' } },
+          patterns: [ { include: '#uid_match_start_block' } ],
+          end: '(})',
+          endCaptures: { '1': { name: 'storage.type.bylaw' } }
+        }
+      ]
+    },
+    uid_match_start_block: {
+      patterns: [
+        { include: '#allow_exception' },
+        { match: '(.)', name: 'invalid.illegal.bylaw' }
+      ]
+    },
+    uid_number: { patterns: [ { match: '(.+)', name: 'invalid.illegal.bylaw' } ] },
+    uid_router_pattern: {
+      patterns: [
+        { match: '([/a-zA-Z0-9_-])', name: 'string.bylaw' },
+        {
+          begin: '({)',
+          beginCaptures: { '1': { name: 'storage.type.bylaw' } },
+          patterns: [ { include: '#uid_router_pattern_var' } ],
+          end: '(})',
+          endCaptures: { '1': { name: 'storage.type.bylaw' } }
+        }
+      ]
+    },
+    uid_router_pattern_var: {
+      patterns: [
+        { match: '(\b[a-z_A-Z0-9]+)', name: 'variable.bylaw' },
+        { match: '([^s]*)', name: 'invalid.illegal.bylaw' }
+      ]
+    },
+    uid_string: { patterns: [ { match: '([^\n])', name: 'string.bylaw' } ] },
+    uid_variable: {
+      patterns: [
+        { match: '(=)', name: 'storage.type.bylaw' },
+        { include: '#string' },
+        { include: '#number' },
+        { include: '#boolean' },
+        { match: '([^s])', name: 'invalid.illegal.bylaw' }
+      ]
+    },
+    variable: {
+      patterns: [
+        {
+          begin: '([a-z_A-Z0-9]+)',
+          beginCaptures: { '1': { name: 'variable.bylaw' } },
+          patterns: [ { include: '#uid_variable' } ],
+          end: '(;)',
+          endCaptures: { '1': { name: 'storage.type.bylaw' } }
+        }
+      ]
+    }
+  }
+}
