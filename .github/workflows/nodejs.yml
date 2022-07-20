@@ -28,6 +28,5 @@ jobs:
           CI: true
       - name: publish
         run: npm publish --access public
-        if: github.event_name == 'release'
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
