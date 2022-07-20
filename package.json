@@ -3,10 +3,6 @@
   "version": "1.2.0",
   "description": "Grant access through a central control.",
   "main": "index.js",
-  "engines": {
-    "node": "12.13.0",
-    "npm": "6.12.0"
-  },
   "scripts": {
     "build": "tsc",
     "test": "node -r ts-node/register test.ts",
