@@ -150,12 +150,12 @@ string_doble_quote : context {
       styles []         = .string;
 
       : pop {
-         regex      \= ([^\\"]\")
+         regex      \= (\")
          styles []   = .string;
       }
 
       : pattern {
-         regex      \= (\\\"|[^\"])
+         regex      \= ([^\"]*)
          styles []   = .string;
       }
    }
@@ -163,16 +163,16 @@ string_doble_quote : context {
 
 string_simple_quote : context {
    : inline_push {
-      regex            \= (\s*\')
+      regex            \= (\')
       styles []         = .string;
 
       : pop {
-         regex      \= ([^\\']\')
+         regex      \= (\')
          styles []   = .string;
       }
 
       : pattern {
-         regex      \= (\\\'|[^\'])
+         regex      \= ([^\']*)
          styles []   = .string;
       }
    }

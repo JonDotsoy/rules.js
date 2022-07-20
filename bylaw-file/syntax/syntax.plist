@@ -472,7 +472,7 @@
             </dict>
            </array>
           <key>end</key>
-          <string>([^\x{005c}\x{0022}]\&quot;)</string>
+          <string>(\&quot;)</string>
           <key>endCaptures</key>
           <dict>
             <key>1</key>
@@ -490,7 +490,7 @@
       <array> 
         <dict>
           <key>match</key>
-          <string>(\\\&quot;|[^\&quot;])</string>
+          <string>([^\&quot;]*)</string>
           <key>name</key>
           <string>string.bylaw</string>
         </dict>
@@ -502,7 +502,7 @@
       <array> 
         <dict>
           <key>begin</key>
-          <string>(\s*\&apos;)</string>
+          <string>(\&apos;)</string>
           <key>beginCaptures</key>
           <dict>
             <key>1</key>
@@ -519,7 +519,7 @@
             </dict>
            </array>
           <key>end</key>
-          <string>([^\x{005c}\x{0027}]\&apos;)</string>
+          <string>(\&apos;)</string>
           <key>endCaptures</key>
           <dict>
             <key>1</key>
@@ -537,7 +537,7 @@
       <array> 
         <dict>
           <key>match</key>
-          <string>(\\\&apos;|[^\&apos;])</string>
+          <string>([^\&apos;]*)</string>
           <key>name</key>
           <string>string.bylaw</string>
         </dict>

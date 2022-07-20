@@ -86,7 +86,7 @@ type Entry<T extends EntryType> =
   }
   : T extends EntryType.match ? {
     match: RegExp
-    name: string
+    name: string | symbol
   }
   : null;
 
@@ -95,6 +95,7 @@ export class Pattern<T extends EntryType> {
   #entry: Entry<T>;
   #indexes: MapIndex
   #patterns: ListPatterns;
+  grammarStore: { indexes: MapIndex; patterns: ListPatterns; };
 
   private constructor(
     type: T,
@@ -102,7 +103,8 @@ export class Pattern<T extends EntryType> {
   ) {
     this.#entry = entry;
     this.#type = type;
-    const { indexes, patterns } = grammarAsyncLocalStorage.getStore()!;
+    this.grammarStore = grammarAsyncLocalStorage.getStore()!;
+    const { indexes, patterns } = this.grammarStore;
     this.#indexes = indexes;
     this.#patterns = patterns;
     patterns.add(this);
@@ -163,20 +165,51 @@ export class Pattern<T extends EntryType> {
         const { end, endCaptures, } = this.#entry;
         const childs: any[] = [];
 
-        const patterns = Array.from(this.deepPatterns());
+        const endPattern = grammarAsyncLocalStorage.run(this.grammarStore, () =>
+          Pattern.create(EntryType.match, {
+            match: end,
+            name: Symbol.for('end'),
+          })
+        );
+
+        let endResult: any;
+
+        const patterns = [endPattern, ...Array.from(this.deepPatterns())];
 
         for (let index = 0; index < patterns.length; index++) {
+          // const endExpResult = endExp.match(value, postEndResult);
+          // if (endExpResult) {
+          //   childs.push(endExpResult);
+          //   postEndResult = endExpResult.end;
+          //   index = 0;
+          //   // postEndResult = endExpResult.index + endExpResult[0].length;
+          //   break;
+          // }
 
           const pattern = patterns[index];
+          console.log({ index, postEndResult, slice: value.slice(postEndResult), pa: pattern.#entry })
+          // console.log({ index, pattern })
+
           const result = pattern.match(value.slice(postEndResult), postEndResult);
           if (result) {
+            if (result.name === Symbol.for('end')) {
+              endResult = result;
+              break;
+            }
             childs.push(result);
             postEndResult = result.end;
-            index = 0;
+            index = -1;
           }
         }
 
+        // if (!endResult) {
+        //   throw new Error(`end not found`);
+        // }
+
         return {
+          type: this.#type,
+          beginExp,
+          endExp: end,
           tokens: Object.entries(beginCaptures).map(([key, value]) => {
             return {
               name: value.name,
@@ -186,6 +219,7 @@ export class Pattern<T extends EntryType> {
           start: resultMatch.index + indexOf + resultMatch.groups!.prefix.length,
           end: postEnd,
           childs,
+          endChild: endResult,
         }
       }
 
@@ -198,13 +232,15 @@ export class Pattern<T extends EntryType> {
       if (matchResult) {
         const postEnd = indexOf + matchResult[0].length;
         return {
+          type: this.#type,
+          name: this.#entry.name,
           tokens: [{
             name: this.#entry.name,
             value: matchResult[2],
           }],
           // value,
           // matchResult,
-          // source: matchExp.source,
+          source: matchExp,
           // indexOf,
           start: indexOf + matchResult.index + matchResult.groups!.prefix.length,
           end: postEnd,
