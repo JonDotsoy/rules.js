@@ -1,6 +1,8 @@
 .editorconfig
 .github/workflows/nodejs.yml
 .nvmrc
+*.ts
+!*.d.ts
 bylaw-file
 nodejs.yml
 test.*
