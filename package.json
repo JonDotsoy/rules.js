@@ -19,12 +19,11 @@
   "author": "Jonathan Delgado <hi@jon.soy> (https://jon.soy)",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^12.12.7",
-    "nodemon": "^2.0.3",
-    "ts-node": "^8.4.1",
-    "typescript": "^3.7.2"
+    "@types/node": "^18.0.6",
+    "nodemon": "^2.0.19",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.10"
   },
-  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JonDotsoy/bylaw.git"
