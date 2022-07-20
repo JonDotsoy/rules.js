@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/JonDotsoy/bylaw/compare/v1.2.2...v1.3.0) (2022-07-20)
+
+
+### Features
+
+* update evaluator ([5c88560](https://github.com/JonDotsoy/bylaw/commit/5c885605e45e80cac3f43e8a52ecc85df4403aa5))
+
 ### [1.2.2](https://github.com/JonDotsoy/bylaw/compare/v1.2.1...v1.2.2) (2022-07-20)
 
 ### [1.2.1](https://github.com/JonDotsoy/bylaw/compare/v1.2.0...v1.2.1) (2022-07-20)
