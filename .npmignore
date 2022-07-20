@@ -1,0 +1,9 @@
+.editorconfig
+.github/workflows/nodejs.yml
+.nvmrc
+bylaw-file
+nodejs.yml
+test.*
+tsconfig.json
+*.tgz
+jest.config.js

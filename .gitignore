@@ -170,3 +170,4 @@ $RECYCLE.BIN/
 *.js.map
 *.d.ts
 *.d.ts.map
+!.npmignore
