@@ -7,10 +7,7 @@ Grant access through a central control.
 ```ts
 const rules = createRules({
   "pacman": token => token.role === "admin",
-  "pacman2": {
-    "read": true,
-    "create": token => token.role === "admin",
-  },
+  "pacman2:create": token => token.role === "admin",
 });
 
 rules.pacman.test({ role: "admin" }); // true
