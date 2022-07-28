@@ -2,10 +2,10 @@
   "name": "bylaw",
   "version": "1.3.2",
   "description": "Grant access through a central control.",
-  "main": "index.js",
+  "main": "sync.js",
   "scripts": {
     "build": "tsc",
-    "test": "node -r ts-node/register test.ts",
+    "test": "ts-node tests.ts",
     "prepare": "tsc"
   },
   "keywords": [
