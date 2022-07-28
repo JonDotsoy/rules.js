@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/JonDotsoy/bylaw/compare/v1.3.2...v1.4.0) (2022-07-28)
+
+
+### Features
+
+* add support to async rules ([070c978](https://github.com/JonDotsoy/bylaw/commit/070c978ce6143c92fc068b5236ea01e7b67832b7))
+
 ### [1.3.2](https://github.com/JonDotsoy/bylaw/compare/v1.3.1...v1.3.2) (2022-07-23)
 
 ### [1.3.1](https://github.com/JonDotsoy/bylaw/compare/v1.3.0...v1.3.1) (2022-07-20)
