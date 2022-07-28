@@ -5,6 +5,8 @@ Grant access through a central control.
 **Sample**
 
 ```ts
+import { createRules } from "bylaw";
+
 // ./rules.ts
 interface RuleInput {
   auth?: {
